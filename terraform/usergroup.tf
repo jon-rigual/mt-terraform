@@ -1,6 +1,6 @@
 resource "harness_platform_usergroup" "this" {
-  identifier  = lower(replace(join("_", [var.organization, var.project, "pipeline_creator"]), "[^a-zA-Z0-9_]", ""))
-  name        = lower(replace(join("_", [var.organization, var.project, "pipeline_creator"]), "[^a-zA-Z0-9_]", ""))
+  identifier  = lower(replace(join("_", [var.organization, var.project, "pipeline_creator"]), "[^\\w]", ""))
+  name        = lower(replace(join("_", [var.organization, var.project, "pipeline_creator"]), "[^\\w]", ""))
   description = "An example user group managed by Terraform."
   tags        = concat(var.default_tags, ["Demo:true"])
   #linked_sso_id      = "linked_sso_id" fixme
@@ -10,7 +10,7 @@ resource "harness_platform_usergroup" "this" {
 }
 
 #resource "harness_platform_usergroup" "this" {
-#  identifier  = lower(replace(join("_", [var.organization, var.project],), "[^a-zA-Z0-9_]", ""))
+#  identifier  = lower(replace(join("_", [var.organization, var.project],), "[^\\w]", ""))
 #  name        = lower(join(" ", [var.instance, "user_group"]))
 #  description = "An example user group managed by Terraform."
 #  tags        = concat(var.default_tags, ["Demo:true"])
@@ -20,7 +20,7 @@ resource "harness_platform_usergroup" "this" {
 #}
 #
 #resource "harness_platform_usergroup" "this" {
-#  identifier  = lower(replace(join("_", [var.organization, var.project],), "[^a-zA-Z0-9_]", ""))
+#  identifier  = lower(replace(join("_", [var.organization, var.project],), "[^\\w]", ""))
 #  name        = lower(join(" ", [var.instance, "user_group"]))
 #  description = "An example user group managed by Terraform."
 #  tags        = concat(var.default_tags, ["Demo:true"])

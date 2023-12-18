@@ -1,6 +1,6 @@
  resource "harness_platform_resource_group" "this" {
-   identifier  = lower(replace(join("_", [var.organization, var.project],), "[^a-zA-Z0-9_]", ""))
-   name        = lower(replace(join("_", [var.organization, var.project],), "[^a-zA-Z0-9_]", ""))
+   identifier  = lower(replace(join("_", [var.organization, var.project],), "[^\\w]", ""))
+   name        = lower(replace(join("_", [var.organization, var.project],), "[^\\w]", ""))
    description = "An example resource group managed by Terraform."
    tags        = concat(var.default_tags, ["Demo:true"])
 
