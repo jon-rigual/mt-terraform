@@ -33,3 +33,13 @@ variable "namespace" {
   description = "The Kubernetes Namespace"
   type        = string
 }
+
+variable "organization" {
+  description = "Organization the automation will run and create objects for"
+  type        = string
+}
+
+variable "project" {
+  description = "Organization the automation will run and create objects for"
+  type        = string
+}
