@@ -24,11 +24,6 @@ variable "organization_name" {
   type        = string
 }
 
-variable "organization_id" {
-  description = "Organization ID to associate with"
-  type        = string
-}
-
 variable "project" {
   description = "Organization the automation will run and create objects for"
   type        = string

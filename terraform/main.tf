@@ -34,6 +34,5 @@ module "project" {
   harness_api_key    = var.harness_api_key
   default_tags       = var.default_tags
   organization_name  = var.organization
-  organization_id    = module.organization.this.id
   project            = var.project
 }

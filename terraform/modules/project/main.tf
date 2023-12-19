@@ -16,12 +16,17 @@ provider "harness" {
   platform_api_key = var.harness_api_key
 }
 
+locals {
+  org_id = data.harness_platform_organization.this.id != null ? data.harness_platform_organization.this.id : ""
+}
+
 data "harness_platform_organization" "this" {
   name = var.organization_name
 }
 
-locals {
-  org_id = data.harness_platform_organization.this.id != null ? data.harness_platform_organization.this.id : ""
+data "harness_platform_project" "this" {
+  name   = var.project
+  org_id = local.org_id
 }
 
 resource "harness_platform_project" "this" {
