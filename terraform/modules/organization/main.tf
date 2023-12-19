@@ -10,11 +10,11 @@ terraform {
 }
 
 #Configure the Harness provider for Next Gen resources
-provider "harness" {
-  endpoint         = var.harness_endpoint
-  account_id       = var.harness_account_id
-  platform_api_key = var.harness_api_key
-}
+# provider "harness" {
+#   endpoint         = var.harness_endpoint
+#   account_id       = var.harness_account_id
+#   platform_api_key = var.harness_api_key
+# }
 
 data "harness_platform_organization" "this" {
   name = var.organization_name
