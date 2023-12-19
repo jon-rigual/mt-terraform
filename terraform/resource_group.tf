@@ -1,5 +1,5 @@
 resource "harness_platform_resource_group" "this" {
-  count = module.project.this != "" ? 1 : 0
+  count = try(module.project.this, 0)
 
   identifier  = lower(replace(join("_", [var.organization, var.project], ), "/[^\\w]/", ""))
   name        = lower(replace(join("_", [var.organization, var.project], ), "/[^\\w]/", ""))
@@ -14,8 +14,8 @@ resource "harness_platform_resource_group" "this" {
   included_scopes {
     filter     = "INCLUDING_CHILD_SCOPES"
     account_id = var.harness_account_id
-    org_id     = length(module.organization.this) > 0 ? module.organization.this.id : ""
-    project_id = length(module.project.this) > 0 ? module.project.this.id : ""
+    org_id     = try(module.organization.this, "")
+    project_id = try(module.project.this, module.project.this.id)
   }
 
   resource_filter {
