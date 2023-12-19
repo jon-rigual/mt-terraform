@@ -17,7 +17,9 @@ provider "harness" {
 }
 
 locals {
-  org_id = data.harness_platform_organization.this.id != null ? data.harness_platform_organization.this.id : ""
+  org_id     = lookup(data.harness_platform_organization.this, "id", null) != null ? data.harness_platform_organization.this.id : ""
+  project_id = data.harness_platform_project.this.id != null ? data.harness_platform_project.this.id : ""
+  exists     = local.org_id != "" && local.project_id != ""
 }
 
 data "harness_platform_organization" "this" {
@@ -30,7 +32,7 @@ data "harness_platform_project" "this" {
 }
 
 resource "harness_platform_project" "this" {
-  count = local.org_id != "" ? 1 : 0
+  count = local.exists != "" ? 1 : 0
 
   identifier  = lower(replace(join("_", [var.organization_name, var.project]), "/[^\\w]/", ""))
   name        = lower(replace(join("_", [var.organization_name, var.project]), "/[^\\w]/", ""))
