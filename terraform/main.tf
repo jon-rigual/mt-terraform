@@ -23,16 +23,18 @@ module "organization" {
   harness_account_id = var.harness_account_id
   harness_api_key    = var.harness_api_key
   default_tags       = var.default_tags
-  organization_name  = var.organization
+  organization_name  = var.structure.organization
 }
 
 module "project" {
   source = "./modules/project"
 
+  for_each = var.structure.projects
+
   harness_endpoint   = var.harness_endpoint
   harness_account_id = var.harness_account_id
   harness_api_key    = var.harness_api_key
   default_tags       = var.default_tags
-  organization_name  = var.organization
-  project            = var.project
+  organization_name  = var.structure.organization
+  project            = each.value
 }

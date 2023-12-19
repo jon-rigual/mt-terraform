@@ -43,3 +43,12 @@ variable "project" {
   description = "Organization the automation will run and create objects for"
   type        = string
 }
+
+
+variable "structure" {
+  description = "Organization and projecy structure"
+  type = object({
+    organization = string
+    projects     = set(string)
+  })
+}
