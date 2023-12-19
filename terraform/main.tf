@@ -16,6 +16,16 @@ provider "harness" {
   platform_api_key = var.harness_api_key
 }
 
+module "organization" {
+  source = "./modules/organization"
+
+  harness_endpoint   = var.harness_endpoint
+  harness_account_id = var.harness_account_id
+  harness_api_key    = var.harness_api_key
+  default_tags       = var.default_tags
+  organization_name  = var.organization
+}
+
 module "project" {
   source = "./modules/project"
 
@@ -24,6 +34,6 @@ module "project" {
   harness_api_key    = var.harness_api_key
   default_tags       = var.default_tags
   organization_name  = var.organization
-  organization_id    = harness_platform_organization.this.id
+  organization_id    = module.organization.this.id
   project            = var.project
 }

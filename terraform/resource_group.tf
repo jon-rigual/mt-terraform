@@ -14,7 +14,7 @@ resource "harness_platform_resource_group" "this" {
   included_scopes {
     filter     = "INCLUDING_CHILD_SCOPES"
     account_id = var.harness_account_id
-    org_id     = harness_platform_organization.this.id
+    org_id     = length(module.organization.this) != 0 ? module.organization.this.id : ""
     project_id = length(module.project.this) != 0 ? module.project.this.id : ""
   }
 
