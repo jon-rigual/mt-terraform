@@ -1,3 +1,3 @@
 output "this" {
-  value = harness_platform_project.this != null ? harness_platform_project.this : toset({ id : "" })
+  value = data.harness_platform_project.this != null ? data.harness_platform_project.this : tomap(harness_platform_project.this)
 }
