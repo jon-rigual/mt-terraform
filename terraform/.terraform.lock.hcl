@@ -2,8 +2,10 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/harness/harness" {
-  version = "0.29.2"
+  version     = "0.29.2"
+  constraints = ">= 0.29.2"
   hashes = [
+    "h1:AFFeruyIB5dse/cs1x6zaa6E+8Hzoa+kQARlmrQfVTw=",
     "h1:DjfB6+9K8Rd/V1mnXiXqxbytSiqP6FvzUfMeaB98K0U=",
     "zh:27ecf0367cdaf576236810a9d794fcae7e05bae57d5673e4f97e8b43d2ec8f24",
     "zh:35c26bf2feb8f520fae788256d65e9601060da1802ed07e6817e337cc529e557",
