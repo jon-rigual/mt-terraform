@@ -19,11 +19,8 @@ provider "harness" {
 module "organization" {
   source = "./modules/organization"
 
-  harness_endpoint   = var.harness_endpoint
-  harness_account_id = var.harness_account_id
-  harness_api_key    = var.harness_api_key
-  default_tags       = var.default_tags
-  organization_name  = var.structure.organization
+  default_tags      = var.default_tags
+  organization_name = var.structure.organization
 }
 
 module "project" {
@@ -31,12 +28,9 @@ module "project" {
 
   for_each = var.structure.projects
 
-  harness_endpoint   = var.harness_endpoint
-  harness_account_id = var.harness_account_id
-  harness_api_key    = var.harness_api_key
-  default_tags       = var.default_tags
-  organization_name  = var.structure.organization
-  project            = each.value
+  default_tags      = var.default_tags
+  organization_name = var.structure.organization
+  project           = each.value
 
   depends_on = [module.organization]
 }
@@ -46,9 +40,7 @@ module "resource_group" {
 
   for_each = var.structure.projects
 
-  harness_endpoint   = var.harness_endpoint
   harness_account_id = var.harness_account_id
-  harness_api_key    = var.harness_api_key
   default_tags       = var.default_tags
   organization_name  = var.structure.organization
   project            = each.value
