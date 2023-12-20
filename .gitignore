@@ -134,3 +134,4 @@ dist
 *.tfstate
 *.tfstate.*
 *.auto.tfvars
+.DS_Store
