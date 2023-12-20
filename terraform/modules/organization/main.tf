@@ -9,16 +9,13 @@ terraform {
   }
 }
 
-data "harness_platform_organization" "this" {
-  name = var.organization_name
+locals {
+  org = lower(replace(var.organization_name, "/[^\\w]/", ""))
 }
 
-
 resource "harness_platform_organization" "this" {
-  count = data.harness_platform_organization.this != null ? 0 : 1
-
-  identifier  = lower(replace(var.organization_name, "/[^\\w]/", ""))
-  name        = lower(replace(var.organization_name, "/[^\\w]/", ""))
-  description = "An example organization managed by Terraform."
+  identifier  = local.org
+  name        = local.org
+  description = "The ${local.org} organization"
   tags        = concat(var.default_tags, ["Demo:true"])
 }
