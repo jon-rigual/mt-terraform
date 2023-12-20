@@ -18,15 +18,14 @@ data "harness_platform_project" "this" {
   org_id = data.harness_platform_organization.this.id
 }
 
-data "harness_platform_resource_group" "this" {
-  identifier = join("_", [var.organization_name, var.project, "admin"])
-  org_id     = data.harness_platform_organization.this.id
+locals {
+  resource_group = lower(replace(join("_", [var.organization_name, var.project], ), "/[^\\w]/", ""))
 }
 
 resource "harness_platform_resource_group" "this" {
-  identifier  = lower(replace(join("_", [var.organization_name, data.harness_platform_project.this.name], ), "/[^\\w]/", ""))
-  name        = lower(replace(join("_", [var.organization_name, data.harness_platform_project.this.name], ), "/[^\\w]/", ""))
-  description = "An example resource group managed by Terraform."
+  identifier  = local.resource_group
+  name        = local.resource_group
+  description = "The ${local.resource_group} resource group"
   tags        = concat(var.default_tags, ["Demo:true"])
 
   account_id = var.harness_account_id
