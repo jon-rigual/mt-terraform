@@ -10,27 +10,18 @@ terraform {
 }
 
 locals {
-  org_id = lookup(data.harness_platform_organization.this, "id", null) != null ? data.harness_platform_organization.this.id : ""
-  # project_id = data.harness_platform_project.this.id != null ? data.harness_platform_project.this.id : ""
-  # exists     = local.org_id != "" && local.project_id != ""
+  project = lower(replace(join("_", [var.organization_name, var.project]), "/[^\\w]/", ""))
 }
 
 data "harness_platform_organization" "this" {
   name = var.organization_name
 }
 
-data "harness_platform_project" "this" {
-  name   = var.project
-  org_id = local.org_id
-}
-
 resource "harness_platform_project" "this" {
-  count = local.org_id != "" ? 1 : 0
-
-  identifier  = lower(replace(join("_", [var.organization_name, var.project]), "/[^\\w]/", ""))
-  name        = lower(replace(join("_", [var.organization_name, var.project]), "/[^\\w]/", ""))
-  description = "An example project managed by Terraform."
+  identifier  = local.project
+  name        = local.project
+  description = "The ${local.project} project"
   tags        = concat(var.default_tags, ["Demo:true"])
-  org_id      = local.org_id
+  org_id      = data.harness_platform_organization.this.id
   color       = "#0063F7"
 }
