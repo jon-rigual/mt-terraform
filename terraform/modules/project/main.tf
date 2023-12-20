@@ -9,13 +9,6 @@ terraform {
   }
 }
 
-#Configure the Harness provider for Next Gen resources
-# provider "harness" {
-#   endpoint         = var.harness_endpoint
-#   account_id       = var.harness_account_id
-#   platform_api_key = var.harness_api_key
-# }
-
 locals {
   org_id = lookup(data.harness_platform_organization.this, "id", null) != null ? data.harness_platform_organization.this.id : ""
   # project_id = data.harness_platform_project.this.id != null ? data.harness_platform_project.this.id : ""
