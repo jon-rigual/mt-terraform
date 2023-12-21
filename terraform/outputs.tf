@@ -11,5 +11,9 @@ output "resource_group" {
 }
 
 output "usergroup" {
-  value = module.usergroup.this
+  value = module.usergroup
+}
+
+output "usergroup_rolebindings" {
+  value = module.usergroup_rolebindings
 }
