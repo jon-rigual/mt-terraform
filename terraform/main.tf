@@ -47,3 +47,17 @@ module "resource_group" {
 
   depends_on = [module.organization, module.project]
 }
+
+module "usergroup" {
+  source = "./modules/usergroup"
+
+  for_each = var.structure.projects
+
+  default_tags      = var.default_tags
+  organization_name = var.structure.organization
+  project           = each.value
+  # role               = harness_platform_roles.admin.id
+  usergroup = join("_", [var.structure.organization, each.value, "pipeline_creator"])
+
+  depends_on = [module.organization, module.project, module.resource_group]
+}

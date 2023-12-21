@@ -10,3 +10,6 @@ output "resource_group" {
   value = module.resource_group
 }
 
+output "usergroup" {
+  value = module.usergroup.this
+}
