@@ -34,17 +34,6 @@ variable "namespace" {
   type        = string
 }
 
-variable "organization" {
-  description = "Organization the automation will run and create objects for"
-  type        = string
-}
-
-variable "project" {
-  description = "Organization the automation will run and create objects for"
-  type        = string
-}
-
-
 variable "structure" {
   description = "Organization and projecy structure"
   type = object({
