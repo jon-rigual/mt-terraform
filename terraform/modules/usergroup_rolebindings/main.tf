@@ -18,13 +18,13 @@ data "harness_platform_project" "this" {
   org_id = data.harness_platform_organization.this.id
 }
 
-data "harness_platform_usergroup" "this" {
-  name = var.usergroup
-}
+# data "harness_platform_usergroup" "this" {
+#   name = var.usergroup
+# }
 
-data "harness_platform_resource_group" "this" {
-  identifier = local.resource_group
-}
+# data "harness_platform_resource_group" "this" {
+#   identifier = local.resource_group
+# }
 
 locals {
   resource_group_suffix = (var.usergroup == "admin") ? null : var.project
