@@ -29,10 +29,10 @@ resource "harness_platform_resource_group" "this" {
   tags        = concat(var.default_tags, ["Demo:true"])
 
   account_id = var.harness_account_id
-  org_id     = data.harness_platform_organization.this.id
-  #   project_id = harness_platform_project.this.id
+  # org_id     = data.harness_platform_organization.this.id
+  # project_id = harness_platform_project.this.id
 
-  allowed_scope_levels = ["project"]
+  allowed_scope_levels = ["account"]
   included_scopes {
     filter     = "INCLUDING_CHILD_SCOPES"
     account_id = var.harness_account_id
