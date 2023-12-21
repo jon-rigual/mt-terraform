@@ -52,10 +52,15 @@ resource "harness_platform_resource_group" "this" {
   resource_filter {
     include_all_resources = true
     # resources {
-    #   resource_type = "PIPELINES"
+    #   resource_type = "ENVIRONMENT"
+    #   # attribute_filter {
+    #   #   attribute_name   = "name"
+    #   #   attribute_values = ["PreProduction"]
+    #   # }
+    #   resource_type = "CONNECTOR"
     #   # attribute_filter {
     #   #   attribute_name   = "category"
-    #   #   attribute_values = ["CLOUD_COST"]
+    #   #   attribute_values = ["SECRET_MANAGER"]
     #   # }
     # }
   }
