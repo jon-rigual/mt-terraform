@@ -22,7 +22,7 @@ locals {
   resource_group_suffix = var.isAdmin ? null : var.project
   project_id            = var.isAdmin ? null : data.harness_platform_project.this.id
   resource_group        = lower(replace(join("_", compact([var.organization_name, local.resource_group_suffix])), "/[^\\w]/", ""))
-  usergroup             = lower(replace(join("_", compact([var.organization_name, local.resource_group_suffix, "admin"])), "/[^\\w]/", ""))
+  usergroup             = lower(replace(join("_", compact([var.organization_name, local.resource_group_suffix, var.usergroup])), "/[^\\w]/", ""))
 }
 
 resource "harness_platform_usergroup" "this" {

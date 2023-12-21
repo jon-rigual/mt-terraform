@@ -30,6 +30,7 @@ locals {
   resource_group_suffix = var.isAdmin ? null : var.project
   project_id            = var.isAdmin ? null : data.harness_platform_project.this.id
   resource_group        = lower(replace(join("_", compact([var.organization_name, local.resource_group_suffix])), "/[^\\w]/", ""))
+  user_group            = lower(replace(join("_", compact([local.resource_group, var.usergroup])), "/[^\\w]/", ""))
 }
 
 resource "harness_platform_role_assignments" "this" {
@@ -40,7 +41,7 @@ resource "harness_platform_role_assignments" "this" {
   disabled                  = false
 
   principal {
-    identifier = var.usergroup
+    identifier = local.user_group
     type       = "USER_GROUP"
   }
 }

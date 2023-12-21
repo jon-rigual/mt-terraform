@@ -82,15 +82,27 @@ module "resource_group" {
   depends_on = [module.organization, module.project]
 }
 
+locals {
+  project_role_map = [
+    for pair in setproduct(var.structure.projects, ["pipeline_creator", "pipeline_executor", "approver"]) : {
+      organization = var.structure.organization
+      project      = pair[0]
+      role         = pair[1]
+    }
+  ]
+}
+
 module "usergroup" {
   source = "./modules/usergroup"
 
-  for_each = var.structure.projects
+  for_each = {
+    for role_map in local.project_role_map : "${role_map.organization}_${role_map.project}_${role_map.role}" => role_map
+  }
 
   default_tags      = var.default_tags
-  organization_name = var.structure.organization
-  project           = each.value
-  usergroup         = join("_", [var.structure.organization, each.value, "admin"])
+  organization_name = each.value.organization
+  project           = each.value.project
+  usergroup         = each.value.role
 
   depends_on = [module.organization, module.project, module.resource_group]
 }
@@ -98,13 +110,15 @@ module "usergroup" {
 module "usergroup_rolebindings" {
   source = "./modules/usergroup_rolebindings"
 
-  for_each = var.structure.projects
+  for_each = {
+    for role_map in local.project_role_map : "${role_map.organization}_${role_map.project}_${role_map.role}" => role_map
+  }
 
   default_tags      = var.default_tags
-  organization_name = var.structure.organization
-  project           = each.value
-  role              = harness_platform_roles.admin.id
-  usergroup         = join("_", [var.structure.organization, each.value, "admin"])
+  organization_name = each.value.organization
+  project           = each.value.project
+  usergroup         = each.value.role
+  role              = each.value.role
 
   depends_on = [module.organization, module.project, module.resource_group, module.usergroup]
 }
