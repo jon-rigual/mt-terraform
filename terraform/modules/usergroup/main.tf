@@ -19,7 +19,7 @@ data "harness_platform_project" "this" {
 }
 
 locals {
-  usergroup = lower(replace(join("_", [var.organization_name, var.project, "pipeline_creator"]), "/[^\\w]/", ""))
+  usergroup = lower(replace(join("_", [var.organization_name, var.project, "admin"]), "/[^\\w]/", ""))
 }
 
 resource "harness_platform_usergroup" "this" {

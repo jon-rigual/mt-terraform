@@ -56,8 +56,7 @@ module "usergroup" {
   default_tags      = var.default_tags
   organization_name = var.structure.organization
   project           = each.value
-  # role               = harness_platform_roles.admin.id
-  usergroup = join("_", [var.structure.organization, each.value, "pipeline_creator"])
+  usergroup         = join("_", [var.structure.organization, each.value, "admin"])
 
   depends_on = [module.organization, module.project, module.resource_group]
 }
@@ -71,7 +70,7 @@ module "usergroup_rolebindings" {
   organization_name = var.structure.organization
   project           = each.value
   role              = harness_platform_roles.admin.id
-  usergroup         = join("_", [var.structure.organization, each.value, "pipeline_creator"])
+  usergroup         = join("_", [var.structure.organization, each.value, "admin"])
 
   depends_on = [module.organization, module.project, module.resource_group, module.usergroup]
 }
