@@ -32,11 +32,18 @@ resource "harness_platform_resource_group" "this" {
 
   account_id = var.harness_account_id
   # org_id     = data.harness_platform_organization.this.id
-  # project_id = harness_platform_project.this.id
+  # project_id = local.project_id
 
   allowed_scope_levels = ["account"]
   included_scopes {
-    filter     = "INCLUDING_CHILD_SCOPES"
+    filter     = var.isAdmin ? "INCLUDING_CHILD_SCOPES" : "EXCLUDING_CHILD_SCOPES"
+    account_id = var.harness_account_id
+    org_id     = data.harness_platform_organization.this.id
+    # project_id = local.project_id
+  }
+
+  included_scopes {
+    filter     = var.isAdmin ? "INCLUDING_CHILD_SCOPES" : "EXCLUDING_CHILD_SCOPES"
     account_id = var.harness_account_id
     org_id     = data.harness_platform_organization.this.id
     project_id = local.project_id
