@@ -13,25 +13,10 @@ variable "harness_api_key" {
   type        = string
 }
 
-variable "instance" {
-  description = "The Harness Instance"
-  type        = string
-}
-
 variable "default_tags" {
   description = "Default tags to apply to all resources"
   type        = list(string)
   default     = []
-}
-
-variable "delegate_name" {
-  description = "The Harness Delegate Name"
-  type        = string
-}
-
-variable "namespace" {
-  description = "The Kubernetes Namespace"
-  type        = string
 }
 
 variable "structure" {
