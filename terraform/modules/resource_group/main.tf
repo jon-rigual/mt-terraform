@@ -14,7 +14,7 @@ data "harness_platform_organization" "this" {
 }
 
 data "harness_platform_project" "this" {
-  name   = var.project
+  name   = join("_", [var.organization_name, var.project])
   org_id = data.harness_platform_organization.this.id
 }
 
