@@ -13,30 +13,34 @@ data "harness_platform_organization" "this" {
   name = var.organization_name
 }
 
-# data "harness_platform_project" "this" {
-#   name   = var.project
-#   org_id = data.harness_platform_organization.this.id
-# }
+data "harness_platform_project" "this" {
+  name   = var.project
+  org_id = data.harness_platform_organization.this.id
+}
 
 data "harness_platform_usergroup" "this" {
   name = var.usergroup
-  # org_id = data.harness_platform_organization.this.id
 }
 
 data "harness_platform_resource_group" "this" {
-  identifier = lower(replace(join("_", [var.organization_name, var.project]), "/[^\\w]/", ""))
-  # org_id     = data.harness_platform_organization.this.id
+  identifier = local.resource_group
+}
+
+locals {
+  resource_group_suffix = var.isAdmin ? null : var.project
+  project_id            = var.isAdmin ? null : data.harness_platform_project.this.id
+  resource_group        = lower(replace(join("_", compact([var.organization_name, local.resource_group_suffix])), "/[^\\w]/", ""))
 }
 
 resource "harness_platform_role_assignments" "this" {
   # org_id                    = data.harness_platform_organization.this.id
-  resource_group_identifier = data.harness_platform_resource_group.this.id
+  resource_group_identifier = local.resource_group
   role_identifier           = var.role
   managed                   = false
   disabled                  = false
 
   principal {
-    identifier = data.harness_platform_usergroup.this.id
+    identifier = var.usergroup
     type       = "USER_GROUP"
   }
 }

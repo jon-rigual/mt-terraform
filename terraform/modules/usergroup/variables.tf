@@ -12,6 +12,7 @@ variable "organization_name" {
 variable "project" {
   description = "Organization the automation will run and create objects for"
   type        = string
+  default     = "unknown"
 }
 
 # variable "role" {
@@ -22,4 +23,10 @@ variable "project" {
 variable "usergroup" {
   description = "User Group to associate with"
   type        = string
+}
+
+variable "isAdmin" {
+  description = "Is the resource group an admin"
+  type        = bool
+  default     = false
 }
