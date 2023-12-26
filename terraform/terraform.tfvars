@@ -3,9 +3,9 @@ default_tags = [
 ]
 
 entities = {
-  "organization" = "foo"
+  "organization" = "A complex-Organization-name"
   "projects" = [
-    "bar",
+    "A complex-Project-name",
   ]
 }
 
