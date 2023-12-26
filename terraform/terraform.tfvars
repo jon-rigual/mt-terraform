@@ -3,9 +3,10 @@ default_tags = [
 ]
 
 entities = {
-  "organization" = "A complex-Organization-name"
+  "organization" = "Org 1"
   "projects" = [
-    "A complex-Project-name",
+    "Project 1",
+    "Project 2",
   ]
 }
 
