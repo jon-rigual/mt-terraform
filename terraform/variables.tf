@@ -1,6 +1,7 @@
 variable "harness_endpoint" {
   description = "The Harness Endpoint"
   type        = string
+  default     = "https://app.harness.io/gateway"
 }
 
 variable "harness_account_id" {
@@ -14,7 +15,7 @@ variable "harness_api_key" {
 }
 
 variable "default_tags" {
-  description = "Default tags to apply to all resources"
+  description = "The default tags to apply to all resources"
   type        = list(string)
   default     = []
 }

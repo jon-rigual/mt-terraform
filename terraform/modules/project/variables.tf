@@ -1,15 +1,15 @@
 variable "default_tags" {
-  description = "Default tags to apply to all resources"
+  description = "The default tags to apply to all resources"
   type        = list(string)
   default     = []
 }
 
 variable "organization_name" {
-  description = "Organization name to associate with"
+  description = "The name of the Harness organization"
   type        = string
 }
 
 variable "project" {
-  description = "Organization the automation will run and create objects for"
+  description = "The name of the Harness project"
   type        = string
 }
