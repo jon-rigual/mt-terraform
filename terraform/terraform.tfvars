@@ -3,7 +3,7 @@ default_tags = [
   "Project:Example",
 ]
 
-structure = {
+entities = {
   "organization" = "foo"
   "projects" = [
     "bar",

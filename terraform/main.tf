@@ -20,16 +20,16 @@ module "organization" {
   source = "./modules/organization"
 
   default_tags      = var.default_tags
-  organization_name = var.structure.organization
+  organization_name = var.entities.organization
 }
 
 module "project" {
   source = "./modules/project"
 
-  for_each = var.structure.projects
+  for_each = var.entities.projects
 
   default_tags      = var.default_tags
-  organization_name = var.structure.organization
+  organization_name = var.entities.organization
   project           = each.value
 
   depends_on = [module.organization]
@@ -40,7 +40,7 @@ module "resource_group_admin" {
 
   harness_account_id = var.harness_account_id
   default_tags       = var.default_tags
-  organization_name  = var.structure.organization
+  organization_name  = var.entities.organization
   isAdmin            = true
 
   depends_on = [module.organization, module.project]
@@ -49,11 +49,11 @@ module "resource_group_admin" {
 module "resource_group" {
   source = "./modules/resource_group"
 
-  for_each = var.structure.projects
+  for_each = var.entities.projects
 
   harness_account_id = var.harness_account_id
   default_tags       = var.default_tags
-  organization_name  = var.structure.organization
+  organization_name  = var.entities.organization
   project            = each.value
 
   depends_on = [module.organization, module.project]
@@ -61,9 +61,9 @@ module "resource_group" {
 
 locals {
   project_role_map = [
-    for pair in setproduct(var.structure.projects, ["pipeline_creator", "pipeline_executor"]) : {
-      key          = "${var.structure.organization}_${pair[0]}_${pair[1]}"
-      organization = var.structure.organization
+    for pair in setproduct(var.entities.projects, ["pipeline_creator", "pipeline_executor"]) : {
+      key          = "${var.entities.organization}_${pair[0]}_${pair[1]}"
+      organization = var.entities.organization
       project      = pair[0]
       role         = pair[1]
     }
@@ -74,9 +74,9 @@ locals {
       for role_map in local.project_role_map : "${role_map.organization}_${role_map.project}_${role_map.role}" => role_map
     },
     {
-      "${var.structure.organization}_admin" = {
-        key          = "${var.structure.organization}_admin"
-        organization = var.structure.organization
+      "${var.entities.organization}_admin" = {
+        key          = "${var.entities.organization}_admin"
+        organization = var.entities.organization
         project      = "unknown"
         role         = "admin"
       }

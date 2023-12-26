@@ -19,8 +19,8 @@ variable "default_tags" {
   default     = []
 }
 
-variable "structure" {
-  description = "Organization and projecy structure"
+variable "entities" {
+  description = "Organization and project structure"
   type = object({
     organization = string
     projects     = set(string)
