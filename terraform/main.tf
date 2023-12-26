@@ -48,7 +48,7 @@ locals {
     [
       for pair in setproduct([var.entities.organization], var.entities.projects) : {
         key          = "${pair[0]}_${pair[1]}"
-        organization = var.entities.organization
+        organization = pair[0]
         project      = pair[1]
         isOrgLevel   = false
       }
@@ -58,19 +58,19 @@ locals {
   project_role_map = concat(
     [
       for pair in setproduct([var.entities.organization], var.roles.organization) : {
-        key          = "${var.entities.organization}_${pair[1]}"
-        organization = var.entities.organization
+        key          = "${pair[0]}_${pair[1]}"
+        organization = pair[0]
         project      = "unknown"
         role         = pair[1]
         isOrgLevel   = true
       }
     ],
     [
-      for pair in setproduct(var.entities.projects, var.roles.project) : {
-        key          = "${var.entities.organization}_${pair[0]}_${pair[1]}"
-        organization = var.entities.organization
-        project      = pair[0]
-        role         = pair[1]
+      for pair in setproduct([var.entities.organization], var.entities.projects, var.roles.project) : {
+        key          = "${pair[0]}_${pair[1]}_${pair[2]}"
+        organization = pair[0]
+        project      = pair[1]
+        role         = pair[2]
         isOrgLevel   = false
       }
     ],
