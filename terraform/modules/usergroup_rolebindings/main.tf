@@ -18,14 +18,6 @@ data "harness_platform_project" "this" {
   org_id = data.harness_platform_organization.this.id
 }
 
-# data "harness_platform_usergroup" "this" {
-#   name = var.usergroup
-# }
-
-# data "harness_platform_resource_group" "this" {
-#   identifier = local.resource_group
-# }
-
 locals {
   resource_group_suffix = var.project_name == "" ? null : var.project_name
   project_id            = var.project_name == "" ? null : data.harness_platform_project.this.id
@@ -34,7 +26,6 @@ locals {
 }
 
 resource "harness_platform_role_assignments" "this" {
-  # org_id                    = data.harness_platform_organization.this.id
   resource_group_identifier = local.resource_group
   role_identifier           = var.role
   managed                   = false
