@@ -14,20 +14,20 @@ data "harness_platform_organization" "this" {
 }
 
 data "harness_platform_project" "this" {
-  name   = join("_", [var.organization_name, var.project])
+  name   = var.project
   org_id = data.harness_platform_organization.this.id
 }
 
 locals {
   resource_group_suffix = var.isOrgLevel ? null : var.project
   project_id            = var.isOrgLevel ? null : data.harness_platform_project.this.id
-  resource_group        = lower(replace(join("_", compact([var.organization_name, local.resource_group_suffix])), "/[^\\w]/", ""))
+  resource_group        = join("_", [for word in split("--", replace(join(" ", compact([var.organization_name, local.resource_group_suffix])), "/[^\\w]/", "--")) : word])
 }
 
 resource "harness_platform_resource_group" "this" {
   identifier  = local.resource_group
   name        = local.resource_group
-  description = "The ${local.resource_group} resource group"
+  description = "The '${local.resource_group}' resource group"
   tags        = concat(var.default_tags, ["Demo:true"])
 
   account_id = var.harness_account_id
