@@ -26,3 +26,11 @@ variable "entities" {
     projects     = set(string)
   })
 }
+
+variable "roles" {
+  description = "Roles to apply to the organization and projects"
+  type = object({
+    organization = list(string)
+    project      = list(string)
+  })
+}

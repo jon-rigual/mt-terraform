@@ -9,3 +9,14 @@ entities = {
     "bar",
   ]
 }
+
+roles = {
+  "organization" = [
+    "security",
+  ]
+  "project" = [
+    "admin",
+    "pipeline_creator",
+    "pipeline_executor",
+  ]
+}

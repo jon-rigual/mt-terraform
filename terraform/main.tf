@@ -60,27 +60,25 @@ module "resource_group" {
 }
 
 locals {
-  project_role_map = [
-    for pair in setproduct(var.entities.projects, ["pipeline_creator", "pipeline_executor"]) : {
-      key          = "${var.entities.organization}_${pair[0]}_${pair[1]}"
-      organization = var.entities.organization
-      project      = pair[0]
-      role         = pair[1]
-    }
-  ]
-
-  merged_role_map = merge(
-    {
-      for role_map in local.project_role_map : "${role_map.organization}_${role_map.project}_${role_map.role}" => role_map
-    },
-    {
-      "${var.entities.organization}_admin" = {
-        key          = "${var.entities.organization}_admin"
+  project_role_map = concat(
+    [
+      for pair in setproduct([var.entities.organization], var.roles.organization) : {
+        key          = "${var.entities.organization}_${pair[1]}"
         organization = var.entities.organization
         project      = "unknown"
-        role         = "admin"
+        role         = pair[1]
+        isOrgLevel   = true
       }
+    ],
+    [
+      for pair in setproduct(var.entities.projects, var.roles.project) : {
+        key          = "${var.entities.organization}_${pair[0]}_${pair[1]}"
+        organization = var.entities.organization
+        project      = pair[0]
+        role         = pair[1]
+        isOrgLevel   = false
     }
+    ],
   )
 }
 
@@ -88,13 +86,14 @@ module "usergroup" {
   source = "./modules/usergroup"
 
   for_each = {
-    for role_map in local.merged_role_map : "${role_map.key}" => role_map
+    for role_map in local.project_role_map : "${role_map.key}" => role_map
   }
 
   default_tags      = var.default_tags
   organization_name = each.value.organization
   project           = each.value.project
   usergroup         = each.value.role
+  isOrgLevel        = each.value.isOrgLevel
 
   depends_on = [module.organization, module.project, module.resource_group]
 }
@@ -103,7 +102,7 @@ module "usergroup_rolebindings" {
   source = "./modules/usergroup_rolebindings"
 
   for_each = {
-    for role_map in local.merged_role_map : "${role_map.key}" => role_map
+    for role_map in local.project_role_map : "${role_map.key}" => role_map
   }
 
   default_tags      = var.default_tags
@@ -111,6 +110,7 @@ module "usergroup_rolebindings" {
   project           = each.value.project
   usergroup         = each.value.role
   role              = each.value.role
+  isOrgLevel        = each.value.isOrgLevel
 
   depends_on = [module.organization, module.project, module.resource_group, module.usergroup]
 }
