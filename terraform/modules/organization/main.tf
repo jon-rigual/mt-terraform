@@ -10,12 +10,12 @@ terraform {
 }
 
 locals {
-  org = lower(replace(var.organization_name, "/[^\\w]/", ""))
+  org_id = join("_", [for word in split("--", replace(var.organization_name, "/[^\\w]/", "--")) : word])
 }
 
 resource "harness_platform_organization" "this" {
-  identifier  = local.org
-  name        = local.org
-  description = "The ${local.org} organization"
+  identifier  = local.org_id
+  name        = var.organization_name
+  description = "The '${var.organization_name}' organization"
   tags        = concat(var.default_tags, ["Demo:true"])
 }
