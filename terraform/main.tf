@@ -61,7 +61,7 @@ module "resource_group" {
 
 locals {
   project_role_map = [
-    for pair in setproduct(var.structure.projects, ["pipeline_creator", "pipeline_executor", "approver"]) : {
+    for pair in setproduct(var.structure.projects, ["pipeline_creator", "pipeline_executor"]) : {
       key          = "${var.structure.organization}_${pair[0]}_${pair[1]}"
       organization = var.structure.organization
       project      = pair[0]
