@@ -24,11 +24,12 @@ locals {
   project_tag           = var.project_name == "" ? "" : "project:${data.harness_platform_project.this.id}"
   resource_group        = join("_", [for word in split("--", replace(join(" ", compact([var.organization_name, local.resource_group_suffix])), "/[^\\w]/", "--")) : word])
   usergroup             = join("_", [for word in split("--", replace(join(" ", compact([var.organization_name, local.resource_group_suffix, var.usergroup])), "/[^\\w]/", "--")) : word])
+  usergroup_name        = join("-", compact([var.organization_name, local.resource_group_suffix, var.usergroup]))
 }
 
 resource "harness_platform_usergroup" "this" {
   identifier  = local.usergroup
-  name        = local.usergroup
+  name        = local.usergroup_name
   description = "The ${local.usergroup} user group"
   tags        = concat(var.default_tags, ["organization:${data.harness_platform_organization.this.id}", local.project_tag])
 
