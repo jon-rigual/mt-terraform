@@ -35,31 +35,26 @@ module "project" {
   depends_on = [module.organization]
 }
 
-module "resource_group_admin" {
-  source = "./modules/resource_group"
-
-  harness_account_id = var.harness_account_id
-  default_tags       = var.default_tags
-  organization_name  = var.entities.organization
-  isOrgLevel         = true
-
-  depends_on = [module.organization, module.project]
-}
-
-module "resource_group" {
-  source = "./modules/resource_group"
-
-  for_each = var.entities.projects
-
-  harness_account_id = var.harness_account_id
-  default_tags       = var.default_tags
-  organization_name  = var.entities.organization
-  project            = each.value
-
-  depends_on = [module.organization, module.project]
-}
-
 locals {
+  resource_group_map = concat(
+    [
+      for entity in [var.entities.organization] : {
+        key          = "${entity}"
+        organization = entity
+        project      = "unknown"
+        isOrgLevel   = true
+      }
+    ],
+    [
+      for pair in setproduct([var.entities.organization], var.entities.projects) : {
+        key          = "${pair[0]}_${pair[1]}"
+        organization = var.entities.organization
+        project      = pair[1]
+        isOrgLevel   = false
+      }
+    ],
+  )
+
   project_role_map = concat(
     [
       for pair in setproduct([var.entities.organization], var.roles.organization) : {
@@ -77,9 +72,25 @@ locals {
         project      = pair[0]
         role         = pair[1]
         isOrgLevel   = false
-    }
+      }
     ],
   )
+}
+
+module "resource_group" {
+  source = "./modules/resource_group"
+
+  for_each = {
+    for role_map in local.resource_group_map : "${role_map.key}" => role_map
+  }
+
+  harness_account_id = var.harness_account_id
+  default_tags       = var.default_tags
+  organization_name  = each.value.organization
+  project            = each.value.project
+  isOrgLevel         = each.value.isOrgLevel
+
+  depends_on = [module.organization, module.project]
 }
 
 module "usergroup" {
