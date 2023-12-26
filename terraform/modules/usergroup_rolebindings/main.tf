@@ -14,7 +14,7 @@ data "harness_platform_organization" "this" {
 }
 
 data "harness_platform_project" "this" {
-  name   = var.project
+  name   = var.project_name == "" ? "unknown" : var.project_name
   org_id = data.harness_platform_organization.this.id
 }
 
@@ -27,8 +27,8 @@ data "harness_platform_project" "this" {
 # }
 
 locals {
-  resource_group_suffix = var.isOrgLevel ? null : var.project
-  project_id            = var.isOrgLevel ? null : data.harness_platform_project.this.id
+  resource_group_suffix = var.project_name == "" ? null : var.project_name
+  project_id            = var.project_name == "" ? null : data.harness_platform_project.this.id
   resource_group        = join("_", [for word in split("--", replace(join(" ", compact([var.organization_name, local.resource_group_suffix])), "/[^\\w]/", "--")) : word])
   user_group            = join("_", [for word in split("--", replace(join(" ", compact([var.organization_name, local.resource_group_suffix, var.usergroup])), "/[^\\w]/", "--")) : word])
 }

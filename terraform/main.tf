@@ -41,16 +41,14 @@ locals {
       for entity in [var.entities.organization] : {
         key          = "${entity}"
         organization = entity
-        project      = "unknown"
-        isOrgLevel   = true
+        project_name = ""
       }
     ],
     [
       for pair in setproduct([var.entities.organization], var.entities.projects) : {
         key          = "${pair[0]}_${pair[1]}"
         organization = pair[0]
-        project      = pair[1]
-        isOrgLevel   = false
+        project_name = pair[1]
       }
     ],
   )
@@ -60,18 +58,16 @@ locals {
       for pair in setproduct([var.entities.organization], var.roles.organization) : {
         key          = "${pair[0]}_${pair[1]}"
         organization = pair[0]
-        project      = "unknown"
+        project_name = ""
         role         = pair[1]
-        isOrgLevel   = true
       }
     ],
     [
       for pair in setproduct([var.entities.organization], var.entities.projects, var.roles.project) : {
         key          = "${pair[0]}_${pair[1]}_${pair[2]}"
         organization = pair[0]
-        project      = pair[1]
+        project_name = pair[1]
         role         = pair[2]
-        isOrgLevel   = false
       }
     ],
   )
@@ -87,8 +83,7 @@ module "resource_group" {
   harness_account_id = var.harness_account_id
   default_tags       = var.default_tags
   organization_name  = each.value.organization
-  project            = each.value.project
-  isOrgLevel         = each.value.isOrgLevel
+  project_name       = each.value.project_name
 
   depends_on = [module.organization, module.project]
 }
@@ -102,9 +97,8 @@ module "usergroup" {
 
   default_tags      = var.default_tags
   organization_name = each.value.organization
-  project           = each.value.project
+  project_name      = each.value.project_name
   usergroup         = each.value.role
-  isOrgLevel        = each.value.isOrgLevel
 
   depends_on = [module.organization, module.project, module.resource_group]
 }
@@ -118,10 +112,9 @@ module "usergroup_rolebindings" {
 
   default_tags      = var.default_tags
   organization_name = each.value.organization
-  project           = each.value.project
+  project_name      = each.value.project_name
   usergroup         = each.value.role
   role              = each.value.role
-  isOrgLevel        = each.value.isOrgLevel
 
   depends_on = [module.organization, module.project, module.resource_group, module.usergroup]
 }

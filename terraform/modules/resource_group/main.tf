@@ -14,14 +14,14 @@ data "harness_platform_organization" "this" {
 }
 
 data "harness_platform_project" "this" {
-  name   = var.project
+  name   = var.project_name == "" ? "unknown" : var.project_name
   org_id = data.harness_platform_organization.this.id
 }
 
 locals {
-  resource_group_suffix = var.isOrgLevel ? null : var.project
-  project_id            = var.isOrgLevel ? null : data.harness_platform_project.this.id
-  project_tag           = var.isOrgLevel ? "" : "project:${data.harness_platform_project.this.id}"
+  resource_group_suffix = var.project_name == "" ? null : var.project_name
+  project_id            = var.project_name == "" ? null : data.harness_platform_project.this.id
+  project_tag           = var.project_name == "" ? "" : "project:${data.harness_platform_project.this.id}"
   resource_group        = join("_", [for word in split("--", replace(join(" ", compact([var.organization_name, local.resource_group_suffix])), "/[^\\w]/", "--")) : word])
 }
 
@@ -37,14 +37,14 @@ resource "harness_platform_resource_group" "this" {
 
   allowed_scope_levels = ["account"]
   included_scopes {
-    filter     = var.isOrgLevel ? "INCLUDING_CHILD_SCOPES" : "EXCLUDING_CHILD_SCOPES"
+    filter     = var.project_name == "" ? "INCLUDING_CHILD_SCOPES" : "EXCLUDING_CHILD_SCOPES"
     account_id = var.harness_account_id
     org_id     = data.harness_platform_organization.this.id
     # project_id = local.project_id
   }
 
   included_scopes {
-    filter     = var.isOrgLevel ? "INCLUDING_CHILD_SCOPES" : "EXCLUDING_CHILD_SCOPES"
+    filter     = var.project_name == "" ? "INCLUDING_CHILD_SCOPES" : "EXCLUDING_CHILD_SCOPES"
     account_id = var.harness_account_id
     org_id     = data.harness_platform_organization.this.id
     project_id = local.project_id
