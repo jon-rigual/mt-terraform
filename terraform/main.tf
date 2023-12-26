@@ -41,7 +41,7 @@ module "resource_group_admin" {
   harness_account_id = var.harness_account_id
   default_tags       = var.default_tags
   organization_name  = var.entities.organization
-  isAdmin            = true
+  isOrgLevel         = true
 
   depends_on = [module.organization, module.project]
 }

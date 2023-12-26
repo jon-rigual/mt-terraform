@@ -20,8 +20,8 @@ variable "usergroup" {
   type        = string
 }
 
-variable "isAdmin" {
-  description = "Is the group an admin"
+variable "isOrgLevel" {
+  description = "Is the group at the organization level?"
   type        = bool
   default     = false
 }

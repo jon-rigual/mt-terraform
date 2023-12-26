@@ -19,8 +19,8 @@ data "harness_platform_project" "this" {
 }
 
 locals {
-  resource_group_suffix = var.isAdmin ? null : var.project
-  project_id            = var.isAdmin ? null : data.harness_platform_project.this.id
+  resource_group_suffix = var.isOrgLevel ? null : var.project
+  project_id            = var.isOrgLevel ? null : data.harness_platform_project.this.id
   resource_group        = lower(replace(join("_", compact([var.organization_name, local.resource_group_suffix])), "/[^\\w]/", ""))
 }
 
@@ -36,14 +36,14 @@ resource "harness_platform_resource_group" "this" {
 
   allowed_scope_levels = ["account"]
   included_scopes {
-    filter     = var.isAdmin ? "INCLUDING_CHILD_SCOPES" : "EXCLUDING_CHILD_SCOPES"
+    filter     = var.isOrgLevel ? "INCLUDING_CHILD_SCOPES" : "EXCLUDING_CHILD_SCOPES"
     account_id = var.harness_account_id
     org_id     = data.harness_platform_organization.this.id
     # project_id = local.project_id
   }
 
   included_scopes {
-    filter     = var.isAdmin ? "INCLUDING_CHILD_SCOPES" : "EXCLUDING_CHILD_SCOPES"
+    filter     = var.isOrgLevel ? "INCLUDING_CHILD_SCOPES" : "EXCLUDING_CHILD_SCOPES"
     account_id = var.harness_account_id
     org_id     = data.harness_platform_organization.this.id
     project_id = local.project_id
