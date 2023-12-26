@@ -17,5 +17,5 @@ resource "harness_platform_organization" "this" {
   identifier  = local.org_id
   name        = var.organization_name
   description = "The '${var.organization_name}' organization"
-  tags        = concat(var.default_tags, ["Demo:true"])
+  tags        = concat(var.default_tags, ["organization:${local.org_id}"])
 }
