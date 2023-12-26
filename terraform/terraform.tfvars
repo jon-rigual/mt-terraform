@@ -1,6 +1,5 @@
 default_tags = [
-  "IaC:Terraform",
-  "Project:Example",
+  "iac:terraform",
 ]
 
 entities = {
