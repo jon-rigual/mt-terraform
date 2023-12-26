@@ -24,3 +24,9 @@ variable "usergroup" {
   description = "User Group to associate with"
   type        = string
 }
+
+variable "isAdmin" {
+  description = "Is the group an admin"
+  type        = bool
+  default     = false
+}
