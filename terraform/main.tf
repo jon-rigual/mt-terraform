@@ -100,6 +100,9 @@ module "usergroup" {
   project_name      = each.value.project_name
   usergroup         = each.value.role
 
+  linked_sso_id           = var.linked_sso_id
+  linked_sso_display_name = var.linked_sso_display_name
+
   depends_on = [module.organization, module.project, module.resource_group]
 }
 

@@ -33,8 +33,14 @@ resource "harness_platform_usergroup" "this" {
   description = "The ${local.usergroup} user group"
   tags        = concat(var.default_tags, ["organization:${data.harness_platform_organization.this.id}", local.project_tag])
 
-  # linked_sso_id = "linked_sso_id"
   # org_id        = harness_platform_organization.this.id
   # project_id    = harness_platform_project.this.id
-  # user_emails   = ["user@example.com"]
+
+  externally_managed      = false
+  sso_linked              = true
+  linked_sso_id           = var.linked_sso_id
+  linked_sso_display_name = var.linked_sso_display_name
+  sso_group_id            = local.usergroup_name
+  sso_group_name          = local.usergroup_name
+  linked_sso_type         = "LDAP"
 }

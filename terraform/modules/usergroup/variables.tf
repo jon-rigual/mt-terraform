@@ -19,3 +19,13 @@ variable "usergroup" {
   description = "The name of the Harness user group"
   type        = string
 }
+
+variable "linked_sso_id" {
+  description = "The ID of the linked SSO provider"
+  type        = string
+}
+
+variable "linked_sso_display_name" {
+  description = "The display name of the linked SSO provider"
+  type        = string
+}

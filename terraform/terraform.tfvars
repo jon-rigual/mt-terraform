@@ -12,11 +12,20 @@ entities = {
 
 roles = {
   "organization" = [
-    "security",
+    "admin",
   ]
   "project" = [
     "admin",
-    "pipeline_creator",
-    "pipeline_executor",
+    "release-manager",
+    "platform-engineer",
+    "developer",
   ]
 }
+
+linked_sso_display_name = "Marriott LDAP"
+
+# <harness org>-admin – Harness organizational admin
+# < harness org >-<project>-admin – Harness project admin (pipeline creator)
+# < harness org >-< project >-release-manager - Able to approve to move through gates
+# < harness org >-< project >-platform-engineer – Nothing as of now
+# < harness org >-< project >-developer – Pipeline executor
