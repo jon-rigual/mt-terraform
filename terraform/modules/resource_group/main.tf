@@ -19,11 +19,12 @@ data "harness_platform_project" "this" {
 }
 
 locals {
+  usergroup             = var.usergroup == "" ? null : var.usergroup
   resource_group_suffix = var.project_name == "" ? null : var.project_name
   project_id            = var.project_name == "" ? null : data.harness_platform_project.this.id
   project_tag           = var.project_name == "" ? "" : "project:${data.harness_platform_project.this.id}"
-  resource_group        = join("_", [for word in split("--", replace(join(" ", compact([var.organization_name, local.resource_group_suffix])), "/[^\\w]/", "--")) : word])
-  resource_group_name   = join("-", compact([var.organization_name, local.resource_group_suffix]))
+  resource_group        = join("_", [for word in split("--", replace(join(" ", compact([var.organization_name, local.resource_group_suffix, local.usergroup])), "/[^\\w]/", "--")) : word])
+  resource_group_name   = join("-", compact([var.organization_name, local.resource_group_suffix, local.usergroup]))
 }
 
 resource "harness_platform_resource_group" "this" {

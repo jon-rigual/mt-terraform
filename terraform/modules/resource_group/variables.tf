@@ -19,3 +19,8 @@ variable "project_name" {
   type        = string
   default     = "unknown"
 }
+
+variable "usergroup" {
+  description = "The name of the Harness user group"
+  type        = string
+}

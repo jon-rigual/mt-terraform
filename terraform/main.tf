@@ -42,13 +42,15 @@ locals {
         key          = "${entity}"
         organization = entity
         project_name = ""
+        role         = "admin"
       }
     ],
     [
-      for pair in setproduct([var.entities.organization], var.entities.projects) : {
-        key          = "${pair[0]}_${pair[1]}"
+      for pair in setproduct([var.entities.organization], var.entities.projects, var.roles.project) : {
+        key          = "${pair[0]}_${pair[1]}_${pair[2]}"
         organization = pair[0]
         project_name = pair[1]
+        role         = pair[2]
       }
     ],
   )
@@ -84,6 +86,7 @@ module "resource_group" {
   default_tags       = var.default_tags
   organization_name  = each.value.organization
   project_name       = each.value.project_name
+  usergroup          = each.value.role
 
   depends_on = [module.organization, module.project]
 }
