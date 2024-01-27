@@ -26,8 +26,8 @@ locals {
 }
 
 resource "harness_platform_role_assignments" "this" {
-  resource_group_identifier = local.resource_group
-  role_identifier           = var.role
+  resource_group_identifier = replace(local.user_group, "-", "_")
+  role_identifier           = replace(var.role, "-", "_")
   managed                   = false
   disabled                  = false
 
