@@ -221,10 +221,10 @@ resource "harness_platform_resource_group" "this" {
       content {
         resource_type = "CONNECTOR"
 
-        attribute_filter {
-          attribute_name   = "category"
-          attribute_values = local.resources[local.resource_level].connectors
-        }
+        # attribute_filter {
+        #   attribute_name   = "category"
+        #   attribute_values = local.resources[local.resource_level].connectors
+        # }
       }
     }
 
@@ -239,7 +239,7 @@ resource "harness_platform_resource_group" "this" {
     dynamic "resources" {
       for_each = var.usergroup == "admin" ? [] : local.abac_merged
       content {
-        identifiers   = []
+        # identifiers   = []
         resource_type = resources.value
       }
     }
