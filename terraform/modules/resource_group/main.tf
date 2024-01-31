@@ -140,17 +140,28 @@ locals {
   ]
 
   abac_non_account = local.resource_level != "account" ? concat(local.abac_account, [
+    "CHAOS_EXPERIMENT",
+    "CHAOS_GAMEDAY",
+    "CHAOS_HUB",
+    "CHAOS_INFRASTRUCTURE",
+    "CHAOS_SECURITY_GOVERNANCE",
+    "FEATUREFLAG",
     "FILE",
     "INPUT_SET",
     "ORGANIZATION",
     "PIPELINE",
     "PROJECT",
     "SECRET",
+    "SEI_COLLECTIONS",
+    "SEI_CONFIGURATION_SETTINGS",
+    "SEI_INSIGHTS",
     "SERVICE",
     "STO_EXEMPTION",
     "STO_ISSUE",
     "STO_SCAN",
     "STO_TESTTARGET",
+    "TARGET",
+    "TARGETGROUP",
     "VARIABLE",
   ]) : local.abac_account
 
