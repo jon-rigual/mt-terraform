@@ -35,7 +35,7 @@ locals {
         # "ARTIFACTORY",
         "CLOUD_PROVIDER",
         "CODE_REPO",
-        # "SECRET_MANAGER",
+        "SECRET_MANAGER",
       ],
     },
     org = {
@@ -56,7 +56,7 @@ locals {
     },
   }
 
-  abac_entities = [
+  abac_account = [
     # "ACCOUNT",
     # "AUDIT",
     # "AUTHSETTING",
@@ -90,7 +90,13 @@ locals {
     # "DOWNTIME",
     # "ENVIRONMENT_GROUP",
     # "FEATUREFLAG",
-    "FILE",
+    # "FILE",
+    # "GITOPS_AGENT",
+    # "GITOPS_APP",
+    # "GITOPS_CERT",
+    # "GITOPS_CLUSTER",
+    # "GITOPS_GPGKEY",
+    # "GITOPS_REPOSITORY",
     # "GOVERNANCEPOLICY",
     # "GOVERNANCEPOLICYSETS",
     # "IAC_WORKSPACE",
@@ -101,28 +107,28 @@ locals {
     # "IDP_PLUGIN",
     # "IDP_SCORECARD",
     # "IDP_SETTINGS",
-    "INPUT_SET",
+    # "INPUT_SET",
     # "LICENSE",
     # "MONITOREDSERVICE",
     # "NETWORK_MAP",
-    "ORGANIZATION",
-    "PIPELINE",
-    "PROJECT",
+    # "ORGANIZATION",
+    # "PIPELINE",
+    # "PROJECT",
     # "RESOURCEGROUP",
     # "ROLE",
-    "SECRET",
+    # "SECRET",
     # "SEI_COLLECTIONS",
     # "SEI_CONFIGURATION_SETTINGS",
     # "SEI_INSIGHTS",
-    "SERVICE",
+    # "SERVICE",
     # "SERVICEACCOUNT",
     # "SETTING",
     # "SLO",
     # "SMTP",
-    "STO_EXEMPTION",
-    "STO_ISSUE",
-    "STO_SCAN",
-    "STO_TESTTARGET",
+    # "STO_EXEMPTION",
+    # "STO_ISSUE",
+    # "STO_SCAN",
+    # "STO_TESTTARGET",
     # "STREAMING_DESTINATION",
     # "TARGET",
     # "TARGETGROUP",
@@ -130,17 +136,32 @@ locals {
     # "TICKET",
     # "USER",
     # "USERGROUP",
-    "VARIABLE",
+    # "VARIABLE",
   ]
 
-  abac_merged = var.usergroup == "platform-engineer" ? concat(local.abac_entities, [
+  abac_non_account = local.resource_level != "account" ? concat(local.abac_account, [
+    "FILE",
+    "INPUT_SET",
+    "ORGANIZATION",
+    "PIPELINE",
+    "PROJECT",
+    "SECRET",
+    "SERVICE",
+    "STO_EXEMPTION",
+    "STO_ISSUE",
+    "STO_SCAN",
+    "STO_TESTTARGET",
+    "VARIABLE",
+  ]) : local.abac_account
+
+  abac_merged = var.usergroup == "platform-engineer" ? concat(local.abac_non_account, [
     "GITOPS_AGENT",
     "GITOPS_APP",
     "GITOPS_CERT",
     "GITOPS_CLUSTER",
     "GITOPS_GPGKEY",
     "GITOPS_REPOSITORY",
-  ]) : local.abac_entities
+  ]) : local.abac_non_account
 }
 
 resource "harness_platform_resource_group" "this" {
