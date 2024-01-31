@@ -36,3 +36,15 @@ resource "harness_platform_role_assignments" "this" {
     type       = "USER_GROUP"
   }
 }
+
+resource "harness_platform_role_assignments" "shared" {
+  resource_group_identifier = "shared_account"
+  role_identifier           = "shared_account"
+  managed                   = false
+  disabled                  = false
+
+  principal {
+    identifier = local.user_group
+    type       = "USER_GROUP"
+  }
+}
