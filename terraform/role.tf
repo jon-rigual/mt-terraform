@@ -39,6 +39,7 @@ resource "harness_platform_roles" "developer" {
     # "ccm_perspective_edit",
     # "ccm_perspective_view",
     # "ccm_recommendations_view",
+
     # "cet_agents_view",
     # "cet_criticalevent_create",
     # "cet_criticalevent_delete",
@@ -46,6 +47,7 @@ resource "harness_platform_roles" "developer" {
     # "cet_token_create",
     # "cet_token_revoke",
     # "cet_token_view",
+
     # "chaos_chaosexperiment_delete",
     # "chaos_chaosexperiment_edit",
     # "chaos_chaosexperiment_execute",
@@ -62,6 +64,7 @@ resource "harness_platform_roles" "developer" {
     # "chaos_chaossecuritygovernance_delete",
     # "chaos_chaossecuritygovernance_edit",
     # "chaos_chaossecuritygovernance_view",
+
     # "chi_downtime_delete",
     # "chi_downtime_edit",
     # "chi_downtime_view",
@@ -72,11 +75,13 @@ resource "harness_platform_roles" "developer" {
     # "chi_slo_delete",
     # "chi_slo_edit",
     # "chi_slo_view",
+
     # "code_repo_delete",
     # "code_repo_edit",
     # "code_repo_push",
     # "code_repo_reportCommitCheck",
     # "code_repo_view",
+
     # "core_account_edit",
     # "core_account_view",
     # "core_audit_view",
@@ -180,6 +185,7 @@ resource "harness_platform_roles" "developer" {
     # "core_variable_delete",
     # "core_variable_edit",
     # "core_variable_view",
+
     # "ff_environment_apiKeyCreate",
     # "ff_environment_apiKeyDelete",
     # "ff_environment_apiKeyView",
@@ -194,6 +200,7 @@ resource "harness_platform_roles" "developer" {
     # "ff_targetgroup_delete",
     # "ff_targetgroup_edit",
     # "ff_targetgroup_view",
+
     # "gitops_agent_delete",
     # "gitops_agent_edit",
     # "gitops_agent_view",
@@ -213,6 +220,7 @@ resource "harness_platform_roles" "developer" {
     # "gitops_repository_delete",
     # "gitops_repository_edit",
     # "gitops_repository_view",
+
     # "iac_workspace_accessstate",
     # "iac_workspace_approve",
     # "iac_workspace_delete",
@@ -220,6 +228,7 @@ resource "harness_platform_roles" "developer" {
     # "iac_workspace_edit",
     # "iac_workspace_editvariable",
     # "iac_workspace_view",
+
     # "idp_advancedconfiguration_delete",
     # "idp_advancedconfiguration_edit",
     # "idp_advancedconfiguration_view",
@@ -240,10 +249,12 @@ resource "harness_platform_roles" "developer" {
     # "idp_scorecard_delete",
     # "idp_scorecard_edit",
     # "idp_scorecard_view",
+
     # "servicediscovery_networkmap_create",
     # "servicediscovery_networkmap_delete",
     # "servicediscovery_networkmap_edit",
     # "servicediscovery_networkmap_view",
+
     # "ssca_enforcementexemption_delete",
     # "ssca_enforcementexemption_edit",
     # "ssca_enforcementexemption_review",
@@ -251,6 +262,7 @@ resource "harness_platform_roles" "developer" {
     # "ssca_remediationtracker_close",
     # "ssca_remediationtracker_edit",
     # "ssca_remediationtracker_view",
+
     # "sto_exemption_approve",
     # "sto_exemption_create",
     # "sto_exemption_view",
