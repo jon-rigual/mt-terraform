@@ -1,6 +1,6 @@
-resource "harness_platform_roles" "developer" {
-  identifier  = "developer"
-  name        = "developer"
+resource "harness_platform_roles" "shared_account" {
+  identifier  = "shared_account"
+  name        = "shared_account"
   description = "An example role managed by Terraform."
   tags        = concat(var.default_tags, ["Demo:true"])
   permissions = [
