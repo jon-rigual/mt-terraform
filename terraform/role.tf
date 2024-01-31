@@ -1,4 +1,4 @@
-resource "harness_platform_roles" "pipeline_executor" {
+resource "harness_platform_roles" "developer" {
   identifier  = "developer"
   name        = "developer"
   description = "An example role managed by Terraform."
