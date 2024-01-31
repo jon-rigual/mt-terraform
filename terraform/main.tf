@@ -39,6 +39,14 @@ locals {
   resource_group_map = concat(
     [
       for entity in [var.entities.organization] : {
+        key          = "account"
+        organization = entity
+        project_name = ""
+        role         = "account"
+      }
+    ],
+    [
+      for entity in [var.entities.organization] : {
         key          = "${entity}"
         organization = entity
         project_name = ""
