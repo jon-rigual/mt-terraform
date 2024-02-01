@@ -204,7 +204,7 @@ resource "harness_platform_resource_group" "this" {
   dynamic "included_scopes" {
     for_each = var.usergroup == "account" ? [] : [var.usergroup]
     content {
-      filter     = var.project_name == "" ? "INCLUDING_CHILD_SCOPES" : "INCLUDING_CHILD_SCOPES"
+      filter     = var.project_name == "" ? "INCLUDING_CHILD_SCOPES" : "EXCLUDING_CHILD_SCOPES"
       account_id = var.harness_account_id
       org_id     = data.harness_platform_organization.this.id
       project_id = local.project_id
